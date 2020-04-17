@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Counter } from './components/counter';
-import Header from './components/header';
+import { Counter } from './components/Counter';
+import Header from './components/Header';
 import NewTodo from './components/NewTodo';
 import Card from './components/Card';
 
