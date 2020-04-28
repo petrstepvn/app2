@@ -1,117 +1,57 @@
-import React, { useState } from 'react';
+import React from 'react';
+import styled from 'styled-components';
 import Card from './Card';
-import styled, { css } from 'styled-components';
-import { COLORS, FONT_SIZE } from '../constants/styles';
+import { FONT_SIZE } from '../constants/styles';
+import { MdAdd } from 'react-icons/md';
 
-const UnderlineStyles = css`
-	position: relative;
-	&::before,
-	&::after {
-		content: '';
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		height: 1px;
-	}
-	&::before {
-		background: ${COLORS.GREY};
-		transform-origin: bottom;
-		transition: transform 0.2s;
-	}
-	&:hover::before {
-		transform: scaleY(1.5);
-	}
-	&::after {
-		background: ${COLORS.BLUE};
-		transform: scaleX(0);
-		transform-origin: center;
-		transition: transform 0.3s;
-	}
-	&:focus-within::after {
-		transform: scale(1, 1.5);
-	}
-`;
-
-export const NewTodoContainer = styled.form`
+const Container = styled.div`
+	padding: 10px;
 	display: flex;
-	justify-content: space-between;
+	font-size: ${FONT_SIZE.MEDIUM};
 `;
 
-export const TextContainer = styled.div`
-	width: 60%;
-	${UnderlineStyles}
-`;
-
-export const Text = styled.input`
-	width: 100%;
+const Text = styled.input`
+	font-size: inherit;
 	border: none;
-	padding: 5px 0;
+	border-bottom: 1px solid black;
+	flex-grow: 1;
 	outline: none;
-	font-size: ${FONT_SIZE.BASE};
+
+	&:focus {
+		border-bottom: 1px solid green;
+	}
 `;
 
-export const SelectContainer = styled.div`
-	margin: 0 10px;
-	flex: 1;
-	${UnderlineStyles}
-`;
-export const Select = styled.select`
-	text-align: center;
+const ButtonAdd = styled.button`
+	font-size: inherit;
+	margin-left: 1rem;
+	background: none;
 	border: none;
-	width: 100%;
-	padding: 5px 0;
-	outline: none;
-	text-align-last: center;
-	font-size: ${FONT_SIZE.BASE};
-	text-transform: capitalize;
-`;
-
-export const Option = styled.option``;
-
-export const Button = styled.button`
-	border-radius: 5px;
-	border: none;
-	padding: 0px 35px;
-	font-weight: bold;
-	color: ${COLORS.WHITE};
-	background: ${COLORS.BLUE};
-	cursor: pointer;
 
 	&:hover {
-		background: lighten(${COLORS.BLUE}, 30%);
+		background: grey;
 	}
 `;
 
-const options = {
-	schedule: 'Enter activity',
-	task: 'Whatcha wanna do?',
-	habbit: 'Stop it, get some help',
-	motivation: 'No pain no gain',
-};
-
-const NewTodo = () => {
-	const [task, setTask] = useState(options.schedule);
+const NewTodo = ({ text, handleChange, handleSubmit }) => {
+	const onEnter = (e) => {
+		e.key === 'Enter' && handleSubmit();
+	};
 
 	return (
 		<Card>
-			<NewTodoContainer>
-				<TextContainer>
-					<Text type="text" placeholder={task}></Text>
-				</TextContainer>
-				<SelectContainer>
-					<Select
-						onChange={(e) => {
-							setTask(options[e.target.value]);
-						}}
-					>
-						{Object.keys(options).map((option) => (
-							<Option value={option}>{option}</Option>
-						))}
-					</Select>
-				</SelectContainer>
-				<Button type="submit">ADD</Button>
-			</NewTodoContainer>
+			<Container>
+				<Text
+					type="text"
+					placeholder="Whatcha wanna do?"
+					value={text}
+					onChange={(e) => handleChange(e)}
+					onKeyDown={(e) => onEnter(e)}
+				/>
+				<ButtonAdd onClick={(e) => handleSubmit(e)}>
+					<MdAdd />
+				</ButtonAdd>
+			</Container>
 		</Card>
 	);
 };

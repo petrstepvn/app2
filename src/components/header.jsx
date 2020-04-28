@@ -2,23 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import { COLORS, FONT_SIZE } from '../constants/styles';
 
-const Container = styled.div`
-	box-shadow: 0 0 10px black;
-	padding: 15px;
+const Container = styled.header`
+	background: ${COLORS.GREY2};
+	width: 100%;
 	text-align: center;
-	background-color: white;
+	box-sizing: border-box;
+	padding: 15px 10px;
+	margin-bottom: 20px;
 `;
 
-const Title = styled.div`
-	color: ${COLORS.BLUE};
+const Text = styled.div`
 	font-size: ${FONT_SIZE.LARGE};
-	font-weight: 500;
 `;
 
 const Header = () => {
 	return (
 		<Container>
-			<Title>Personal Growth App</Title>
+			<Text>Not so interesting Todo list</Text>
 		</Container>
 	);
 };
